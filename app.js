@@ -87,7 +87,7 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
   if(error) throw error;
 
   database = client.db(DATABASE_NAME);
-  collection = database.collection("newcollection"); // you can change the collection name
+  collection = database.collection("testcollection"); // you can change the collection name
 
   // Start the application after the database connection is ready
   app.listen(3000, () => {
