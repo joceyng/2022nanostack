@@ -96,7 +96,7 @@ app.post("/", function(req, res){
 });
 
  // Start the application after the database connection is ready
- app.listen(PORT, () => {
-	console.log('This app is running on port ' + PORT)
+ app.listen(3000, () => {
+	console.log('This app is running on port 3000')
   });  
  
