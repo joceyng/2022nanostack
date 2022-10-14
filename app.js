@@ -1,20 +1,21 @@
 const express = require('express');
 const app = express();
+const PORT = 5000; // this is to allow the app to run locally //
+const bodyParser = require('body-parser');
 const https = require('https');
 const cookieParser = require('cookie-parser');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
-app.use(cookieParser());
+app.set('view engine', 'ejs');
+app.use('/static', express.static('public'));
+app.use(bodyParser.urlencoded({
+	extended: true
+  }));
+app.use(bodyParser.json());
 app.use(express.urlencoded({extended: true}));
-app.set("view engine", "ejs");
+app.use(cookieParser());
 
-app.get('/', function(req, res){
-    res.render('home');
-});
 
-app.get('/contact', (req, res) => {
-    res.render('contact', {title: "Contact"}); 
-});
 
 const MongoClient = require('mongodb').MongoClient;
 
@@ -26,7 +27,23 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
 	if(error) throw error;
   
 	database = client.db(DATABASE_NAME);
-	collection = database.collection("testcollection");
+	collection = database.collection("newcollection");
+});
+
+app.get('/', (req, res) => {
+    res.render('home', {title: "Home", name: req.body.name}); 
+});
+
+app.get('/about', (req, res) => {
+    res.render('about', {title: "About"}); 
+});
+
+app.get('/portfolio', (req, res) => {
+    res.render('portfolio', {title: "Portfolio"}); 
+});
+
+app.get('/contact', (req, res) => {
+    res.render('contact', {title: "Contact"}); 
 });
 
 app.post('/', (req, res) => {
@@ -56,7 +73,7 @@ app.post('/', (req, res) => {
 				"context": {
 				  "hutk": req.cookies.hubspotutk,
 				  "pageUri": "https://dark-bee-dirndl.cyclic.app/contact",
-				  "pageName": "local host"
+				  "pageName": "Portfolio app contact page"
 				}
 			  }
 		  
@@ -93,8 +110,8 @@ app.post('/', (req, res) => {
 	
 });
 
-  // Start the application after the database connection is ready
-  app.listen(3000, () => {
-	console.log('This app is running on port 3000')
-  }) 
 
+  // Start the application after the database connection is ready
+  app.listen(PORT, () => {
+	console.log('This app is running on port ' + PORT)
+  });   
