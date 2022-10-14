@@ -1,4 +1,3 @@
-testing 
 const express = require('express');
 const app = express();
 const PORT = 5000; // this is to allow the app to run locally //
