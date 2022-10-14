@@ -23,16 +23,18 @@ const DATABASE_NAME = "joceyng"; // you can change the database name
 var database, collection;
 
 MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-  if(error) throw error;
-
-  database = client.db(DATABASE_NAME);
-  collection = database.collection("testcollection"); // you can change the collection name
-
-
+	if(error) throw error;
+  
+	database = client.db(DATABASE_NAME);
+	collection = database.collection("testcollection");
 });
 
 app.post('/', (req, res) => {
-	
+	collection.insertOne(req.body, (err, result) => {  
+        if (err) return console.log(err)
+        console.log('saved to database'); 
+			       
+       })
 	function formv3(){
 		// Create the new request 
 		var xhr = new XMLHttpRequest();
@@ -54,11 +56,11 @@ app.post('/', (req, res) => {
 				"context": {
 				  "hutk": req.cookies.hubspotutk,
 				  "pageUri": "https://dark-bee-dirndl.cyclic.app/contact",
-				  "pageName": "Localhost"
+				  "pageName": "Portfolio app contact page"
 				}
 			  }
 		  
-			  var final_data = JSON.stringify(data);
+			  var final_data = JSON.stringify(data)
 		  
 			  xhr.open('POST', url);
 			  // Sets the value of the 'Content-Type' HTTP request headers to 'application/json'
@@ -79,23 +81,17 @@ app.post('/', (req, res) => {
 		  
 			  // Sends the request 
 			  
-			xhr.send(final_data)
+			xhr.send(final_data);
 			
 	}
 	
 	formv3(); 
-	console.log('form submitted');
-
-	collection.insertOne(req.body, (err, result) => {  
-        if (err) return console.log(err);
-        console.log('saved to database'); 
-			       
-       });
+	
+	
 	res.redirect('/'); // or do something else here	
 	
 	
 });
-
 
   // Start the application after the database connection is ready
   app.listen(3000, () => {
