@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const PORT = 5000; // this is to allow the app to run locally //
 const https = require('https');
 const cookieParser = require('cookie-parser');
 var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
@@ -12,18 +11,8 @@ var database, collection;
 
 
 app.set('view engine', 'ejs');
-app.use('/static', express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-
-
-
-MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-	if(error) throw error;
-  
-	database = client.db(DATABASE_NAME);
-	collection = database.collection("newcollection");
-});
 
 app.get('/', (req, res) => {
     res.render('home', {title: "Home", name: req.body.name}); 
@@ -32,8 +21,17 @@ app.get('/', (req, res) => {
 app.get('/contact', (req, res) => {
     res.render('contact', {title: "Contact"}); 
 });
+
+MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+	if(error) throw error;
   
-app.post('/', (req, res) => {
+	database = client.db(DATABASE_NAME);
+	collection = database.collection("newcollection");
+});
+
+
+  
+app.post("/", function(req, res){
 	collection.insertOne(req.body, (err, result) => {  
         if (err) return console.log(err)
         console.log('saved to database'); 
