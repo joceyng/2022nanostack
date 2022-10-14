@@ -34,14 +34,6 @@ app.get('/', (req, res) => {
     res.render('home', {title: "Home", name: req.body.name}); 
 });
 
-app.get('/about', (req, res) => {
-    res.render('about', {title: "About"}); 
-});
-
-app.get('/portfolio', (req, res) => {
-    res.render('portfolio', {title: "Portfolio"}); 
-});
-
 app.get('/contact', (req, res) => {
     res.render('contact', {title: "Contact"}); 
 });
@@ -115,3 +107,4 @@ app.post('/', (req, res) => {
   app.listen(PORT, () => {
 	console.log('This app is running on port ' + PORT)
   });   
+  
