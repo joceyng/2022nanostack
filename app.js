@@ -85,11 +85,12 @@ app.post('/', (req, res) => {
 	
 	formv3(); 
 	console.log('form submitted');
+
 	collection.insertOne(req.body, (err, result) => {  
         if (err) return console.log(err);
         console.log('saved to database'); 
 			       
-       })
+       });
 	res.redirect('/'); // or do something else here	
 	
 	
