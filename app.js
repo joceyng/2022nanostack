@@ -27,7 +27,7 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
 	if(error) throw error;
   
 	database = client.db(DATABASE_NAME);
-	collection = database.collection("newcollection");
+	collection = database.collection('newcollection');
 });
 
 app.get('/', (req, res) => {
