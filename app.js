@@ -34,12 +34,12 @@ app.get('/contact', (req, res) => {
 
   
 app.post("/", function(req, res){
-	setTimeout(() => {  console.log("test!"); }, 1000);
+	setTimeout(() => {
 	collection.insertOne(req.body, (err, result) => {  
         if (err) return console.log(err)
         console.log('saved to database'); 
 			       
-       })
+       })}, 1000);
 	function formv3(){
 		// Create the new request 
 		var xhr = new XMLHttpRequest();
