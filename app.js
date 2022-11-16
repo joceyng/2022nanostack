@@ -9,6 +9,13 @@ const CONNECTION_URL = "mongodb+srv://joceyng:test@joceyng.hqak4.mongodb.net/tes
 const DATABASE_NAME = "joceyng"; // you can change the database name
 var database, collection;
 
+MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+	if(error) throw error;
+  
+	database = client.db(DATABASE_NAME);
+	collection = database.collection("newcollection");
+});
+
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}));
@@ -87,12 +94,6 @@ app.post("/", function(req, res){
 	res.redirect('/'); // or do something else here	
 	
 	
-});
-MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-	if(error) throw error;
-  
-	database = client.db(DATABASE_NAME);
-	collection = database.collection("newcollection");
 });
 
  // Start the application after the database connection is ready
