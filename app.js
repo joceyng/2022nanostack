@@ -34,7 +34,7 @@ app.get('/contact', (req, res) => {
 
   
 app.post("/", function(req, res){
-	console.log("test")
+	setTimeout(() => {  console.log("test!"); }, 1000);
 	collection.insertOne(req.body, (err, result) => {  
         if (err) return console.log(err)
         console.log('saved to database'); 
