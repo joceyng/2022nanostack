@@ -14,6 +14,7 @@ MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) =
   
 	database = client.db(DATABASE_NAME);
 	collection = database.collection("newcollection");
+	console.log("completed connection")
 });
 
 
@@ -33,6 +34,7 @@ app.get('/contact', (req, res) => {
 
   
 app.post("/", function(req, res){
+	console.log("test")
 	collection.insertOne(req.body, (err, result) => {  
         if (err) return console.log(err)
         console.log('saved to database'); 
